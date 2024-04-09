@@ -2,10 +2,7 @@ import ScrollSnapping from "../scripts/ScrollSnapping";
 
 const AdvancedCarousel = () => {
     return (
-        <div style={{
-            overflow: 'hidden',
-            maxHeight: '90vh'
-        }}>
+        <div style={{ overflow: 'hidden'}}>
             <ul
                 style={{
                     display: 'flex',
@@ -13,7 +10,7 @@ const AdvancedCarousel = () => {
                     alignItems: 'center',
                 }}
             >
-                {Array.from({length: 100}).map((_, i) => (
+                {Array.from({ length: 100 }).map((_, i) => (
                     <li
                         key={i} // Add key prop for optimization
                         style={{
@@ -34,7 +31,7 @@ const AdvancedCarousel = () => {
                     </li>
                 ))}
             </ul>
-            <ScrollSnapping/>
+            <ScrollSnapping />
         </div>
     );
 };

@@ -7,7 +7,7 @@ function ScrollSnapping() {
 
     useEffect(() => {
         // Define snap interval size
-        const snapInterval = 850; // Updated snap interval size
+        const snapInterval = 800; // Updated snap interval size
 
         // Listen for scroll events
         const handleScroll = () => {
@@ -44,7 +44,7 @@ function ScrollSnapping() {
 
     // Function to scroll to the focused element
     const scrollToFocusedElement = () => {
-        const snapInterval = 850; // Updated snap interval size
+        const snapInterval = 800; // Updated snap interval size
         const targetScroll = focusedIndex * snapInterval;
         setScrollingActive(true); // Set scrolling active flag
         window.scrollTo({

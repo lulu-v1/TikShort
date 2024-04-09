@@ -2,9 +2,8 @@ import AdvancedCarousel from './components/AdvancedCarousel'; // Import the Adva
 
 function App() {
     return (
-        <AdvancedCarousel />
-        // <div></div>
-    );
+        <div><AdvancedCarousel/>
+        </div>);
 }
 
 export default App;

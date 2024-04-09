@@ -1,25 +1,25 @@
-import { useSnapCarousel } from 'react-snap-carousel';
+import ScrollSnapping from "../scripts/ScrollSnapping";
 
 const AdvancedCarousel = () => {
-    const { scrollRef, pages, activePageIndex, next, prev, goTo } =
-        useSnapCarousel();
     return (
-        <>
+        <div style={{ overflow: 'hidden' }}>
             <ul
-                ref={scrollRef}
                 style={{
                     display: 'flex',
-                    overflow: 'auto',
-                    scrollSnapType: 'y mandatory'
+                    flexDirection: 'column',
+                    alignItems: 'center',
                 }}
             >
                 {Array.from({ length: 100 }).map((_, i) => (
                     <li
+                        key={i} // Add key prop for optimization
                         style={{
-                            backgroundColor: 'aqua',
+                            backgroundColor: 'red',
+                            borderRadius: '10px',
                             fontSize: '50px',
-                            width: '250px',
-                            height: '250px',
+                            width: '22vw',
+                            height: '830px',
+                            marginTop: '20px',
                             flexShrink: 0,
                             color: '#fff',
                             display: 'flex',
@@ -31,24 +31,8 @@ const AdvancedCarousel = () => {
                     </li>
                 ))}
             </ul>
-            <div>
-                {activePageIndex + 1} / {pages.length}
-            </div>
-            <button onClick={() => prev()}>Prev</button>
-            <button onClick={() => next()}>Next</button>
-            <ul style={{marker:'none'}}>
-                {pages.map((_, i) => (
-                    <li key={i}  >
-                        <button
-                            style={i === activePageIndex ? { opacity: 0.5 } : {}}
-                            onClick={() => goTo(i)}
-                        >
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </>
+            <ScrollSnapping />
+        </div>
     );
 };
 

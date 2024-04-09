@@ -18,7 +18,7 @@ const AdvancedCarousel = () => {
                             borderRadius: '10px',
                             fontSize: '50px',
                             width: '22vw',
-                            height: '780px',
+                            height: '750px',
                             marginTop: '20px',
                             flexShrink: 0,
                             color: '#fff',

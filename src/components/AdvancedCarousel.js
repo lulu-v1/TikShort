@@ -9,7 +9,6 @@ const AdvancedCarousel = () => {
                 ref={scrollRef}
                 style={{
                     display: 'flex',
-                    flexDirection: 'column',
                     overflow: 'auto',
                     scrollSnapType: 'y mandatory'
                 }}
@@ -37,7 +36,7 @@ const AdvancedCarousel = () => {
             </div>
             <button onClick={() => prev()}>Prev</button>
             <button onClick={() => next()}>Next</button>
-            <ul style={{ display: 'flex',flexDirection:'column'}}>
+            <ul style={{marker:'none'}}>
                 {pages.map((_, i) => (
                     <li key={i}  >
                         <button

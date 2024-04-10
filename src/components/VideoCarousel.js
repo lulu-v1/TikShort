@@ -1,6 +1,6 @@
 import ScrollSnapping from "../scripts/ScrollSnapping";
 
-const AdvancedCarousel = () => {
+const VideoCarousel = () => {
     return (
         <div style={{ overflow: 'hidden'}}>
             <ul
@@ -36,4 +36,4 @@ const AdvancedCarousel = () => {
     );
 };
 
-export default AdvancedCarousel;
+export default VideoCarousel;

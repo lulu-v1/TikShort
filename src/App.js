@@ -1,10 +1,10 @@
-import AdvancedCarousel from './components/AdvancedCarousel'; // Import the AdvancedCarousel component
+import VideoCarousel from './components/VideoCarousel'; // Import the AdvancedCarousel component
 import Header from './components/Header'; // Import the Header component
 function App() {
     return (
         <div>
             <Header/>
-            <AdvancedCarousel/>
+            <VideoCarousel/>
         </div>
     );
 }

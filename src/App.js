@@ -3,8 +3,8 @@ import Header from './components/Header'; // Import the Header component
 function App() {
     return (
         <div>
-        <Header/>
-        <AdvancedCarousel />
+            <Header/>
+            <AdvancedCarousel/>
         </div>
     );
 }

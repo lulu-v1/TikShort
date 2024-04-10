@@ -1,6 +1,6 @@
 // import logo from 'public/logo192.png';
 
-function Header() {
+const Header = () => {
     return (
         <header style={{
             position: 'sticky',

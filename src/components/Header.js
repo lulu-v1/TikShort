@@ -8,7 +8,7 @@ function Header() {
             display: 'flex',
             backgroundColor: 'black',
             color: 'white',
-            height: '100px',
+            height: '80px',
         }}>
             <nav style={{
                 display: 'flex',

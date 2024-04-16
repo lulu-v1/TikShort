@@ -1,91 +1,50 @@
-// import logo from 'public/logo192.png';
+// Header.js
+import React, { useState } from 'react';
+import FilterCarousel from "./FilterCarousel";
+import SearchBar from './SearchBar';
 
-function Header() {
+const Header = () => {
+    const [isSearchExpanded, setSearchExpanded] = useState(false);
+    const toggleSearch = () => setSearchExpanded(!isSearchExpanded);
+
     return (
         <header style={{
             position: 'sticky',
             top: 0,
             display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             backgroundColor: 'black',
             color: 'white',
-            height: '80px',
+            height: '100px',
+            padding: '0 15px',
         }}>
-            <nav style={{
+            <h1 style={{ fontSize: '3rem' }}>TikShort</h1>
+
+            {/* Contenedor para los filtros y la barra de búsqueda */}
+            <div style={{
+                gap: '50px',
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%',
-                padding: '10px'
+                justifyContent: 'center'
             }}>
-                <h1 style={{
-                    fontSize: '3rem',
-                    width: '20vw',
-                }}>TikShort
-                </h1>
-                <div style={{
-                    display: 'flex',
-                    gap: '10px',
-                }}>
-                    <input type="text" placeholder="Search..." style={{
-                        width: '25vw',
-                        height: '21px',
-                        padding: '5px',
-                        borderRadius: '15px',
-                        border: 'none'
-                    }}/>
-                    <button style={{
-                        padding: '5px',
-                        borderRadius: '12px',
-                        border: 'none',
-                        backgroundColor: 'white',
-                        color: 'black'
-                    }}>apply
-                    </button>
-                </div>
-                <form action="/">
-                    <ul style={{
-                        listStyle: 'none',
-                        display: 'flex',
-                        gap: '18px'
-                    }}>
-                        <li>
-                            <button style={{
-                                transition: '0.5s esae',
-                                height: '30px',
-                                padding: '5px',
-                                borderRadius: '8px',
-                                border: 'none',
-                                backgroundColor: "lightsteelblue",
-                                color: 'black',
-                            ':hover': { // Aplicando estilo al hover
-                                    cursor: 'pointe',
-                                    opacity: '1',
-                                }
-                            }}>Category 1</button>
-                        </li>
-                        <li>
-                            <button style={{
-                                height: '30px',
-                                padding: '5px',
-                                borderRadius: '8px',
-                                border: 'none',
-                                backgroundColor: 'lightpink',
-                                color: 'black'
-                            }}>Category 2</button>
-                        </li>
-                        <li>
-                            <button style={{
-                                height: '30px',
-                                padding: '5px',
-                                borderRadius: '8px',
-                                border: 'none',
-                                backgroundColor: 'lightgreen',
-                                color: 'black'
-                            }}>Category 3</button>
-                        </li>
-                    </ul>
-                </form>
-            </nav>
+                <SearchBar isExpanded={isSearchExpanded} toggleSearch={toggleSearch} />
+                <FilterCarousel isVisible={!isSearchExpanded} />
+            </div>
+
+            {/* Botón de perfil en el lado derecho */}
+            <button aria-label="Profile settings"  style={{
+                border: 'none',
+                backgroundColor: 'lightsteelblue',
+                color: 'black',
+                padding: '10px',
+                borderRadius: '40px',
+                width: '7%',
+                cursor: 'pointer',
+                marginLeft: '10px', // Espacio entre el botón de búsqueda y perfil
+            }}>
+                Profile
+                <i className="fas fa-user" aria-hidden="true"></i> {/* Icono de perfil */}
+            </button>
         </header>
     );
 }

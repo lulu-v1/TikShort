@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import ScrollSnapping from "../scripts/ScrollSnapping";
+import FeedbackButtons from "./FeedBackButtons";
+import '../style/VideoCarousel.css';
 
 const VideoCarousel = () => {
     const [videos, setVideos] = useState([]); // State to store video elements
     const [focusedIndex, setFocusedIndex] = useState(0); // State to store the index of the focused element
-    const [startIndex, setStartIndex] = useState(0); // State to store the amount of words to display
     const [currentText, setCurrentText] = useState(''); // State to store the current text of the video
     const chunkSize = 7;
     const wordDelay = 4;
     // Define video URLs
-    const videoURLs = [
-        '/static/vids/28707-371213524_tiny.mp4',
-        '/static/vids/198358-907598215_tiny.mp4',
-        '/static/vids/199294-909903183_small.mp4',
-        '/static/vids/202560-918431383_tiny.mp4',
-    ];
+    const videoURLs = ['/static/vids/28707-371213524_tiny.mp4', '/static/vids/198358-907598215_tiny.mp4', '/static/vids/199294-909903183_small.mp4', '/static/vids/202560-918431383_tiny.mp4',];
 
     function splitSentence(sentence, chunkSize) {
         const words = sentence.split(' ');
@@ -30,12 +26,11 @@ const VideoCarousel = () => {
     const handleTextUpdate = (event) => {
         const fullText = 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Wesh aussi on rajoute ca';
         const video = event.target;
-        const chunks =  splitSentence(fullText, chunkSize);
-
+        const chunks = splitSentence(fullText, chunkSize);
 
 
         const durationPerTrunk = video.duration / chunks.length;
-        const durationPerWord = durationPerTrunk / (chunkSize+wordDelay);
+        const durationPerWord = durationPerTrunk / (chunkSize + wordDelay);
 
         const trunkToDisplay = Math.floor(video.currentTime / durationPerTrunk);
         const endIndex = Math.floor((video.currentTime % durationPerTrunk) / durationPerWord);
@@ -45,33 +40,44 @@ const VideoCarousel = () => {
 
 
     function PlayFocusedVideo() {
-        setStartIndex(0);
         const videos = document.querySelectorAll('video');
         videos.forEach((video, index) => {
             if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
                 video.currentTime = 0;
-                if (index !== focusedIndex && !video.paused) {
+                // Check if the video is already playing or in the process of playing
+                if (index !== focusedIndex && !video.paused && !video.playingFlag) {
+                    // Pause the video only if it's not the focused video and it's not already playing
+                    video.currentTime = 0;
                     video.pause();
                 }
-                videos[focusedIndex].play();
+                if (index===focusedIndex){// Set a flag to indicate that the video is in the process of playing
+                    video.playingFlag = true;
+                    // Play the video
+                    video.play().then(() => {
+                        // Once play is successful, unset the playing flag
+                        video.playingFlag = false;
+                    }).catch((error) => {
+                        // If an error occurs, unset the playing flag
+                        video.playingFlag = false;
+                        console.error('Error occurred while playing video:', error);
+                    });
+                }
             }
         });
-
     }
+
 
     useEffect(() => {
         const videoElements = videoURLs.map((url, i) => {
-            return (
-                <video
-                    key={i}
-                    src={url}
-                    loop
-                    style={{
-                        height: '100%',
-                    }}
-                    onTimeUpdate={handleTextUpdate}
-                />
-            );
+            return (<video
+                key={i}
+                src={url}
+                loop
+                style={{
+                    height: '100%',
+                }}
+                onTimeUpdate={handleTextUpdate}
+            />);
         });
         setVideos(videoElements);
 
@@ -86,42 +92,26 @@ const VideoCarousel = () => {
         setFocusedIndex(index);
     };
 
-    return (
-        <main style={{overflow: 'hidden'}}>
-            <ul
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+    return (<main style={{overflow: 'hidden'}}>
+        <ul
+            className={'video-carousel'}
+        >
+            {videos.map((video, i) => (<li
+                className={'content'}
             >
-                {videos.map((video, i) => (
-                    <li
-                        key={i}
-                        style={{
-                            borderRadius: '10px',
-                            width: '450px',
-                            height: '750px',
-                            marginTop: '20px',
-                            flexShrink: 0,
-                            color: '#fff',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            overflowX: 'hidden',
-                        }}
-                    >
-                        {video}
-                        <p
-                            style={{fontSize: '2.5rem',fontWeight:'bold', position: 'absolute', width: '250px'}}
-                        >{currentText}</p>
-                    </li>
-                ))}
-            </ul>
-            <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
-            <div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>
-        </main>
-    );
+                <div className={'video-container'}>
+                    {video}
+                    <p
+                        className={'video-text'}
+                    >{currentText}</p>
+                </div>
+
+                <FeedbackButtons/>
+            </li>))}
+        </ul>
+        <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
+        {/*<div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>*/}
+    </main>);
 };
 
 export default VideoCarousel;

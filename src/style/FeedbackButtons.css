@@ -1,0 +1,36 @@
+.feedback-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.feedback-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dedede;
+    border-radius: 50%;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    color: black;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border: none
+}
+
+.like-btn {
+    height: 60%;
+}
+
+.active {
+    background-color: lightpink;
+    color: white;
+    transition: all 0.2s;
+}
+
+.inactive {
+    transition: all 0.2s;
+}

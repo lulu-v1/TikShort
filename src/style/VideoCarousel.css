@@ -1,0 +1,44 @@
+/* VideoCarousel.css */
+
+/* Style for the main container */
+main {
+    overflow: hidden;
+}
+
+/* Style for the list container */
+.video-carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for each list item */
+.content {
+    border-radius: 10px;
+    height: 750px;
+    margin-top: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for the video container */
+.video-container {
+    border-radius: 10px;
+    width: 450px;
+    height: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Style for the text displayed over the video */
+.video-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    position: absolute;
+    width: 400px;
+}

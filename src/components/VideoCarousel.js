@@ -6,7 +6,8 @@ const VideoCarousel = () => {
     const [focusedIndex, setFocusedIndex] = useState(0); // State to store the index of the focused element
     const [startIndex, setStartIndex] = useState(0); // State to store the amount of words to display
     const [currentText, setCurrentText] = useState(''); // State to store the current text of the video
-
+    const chunkSize = 7;
+    const wordDelay = 4;
     // Define video URLs
     const videoURLs = [
         '/static/vids/28707-371213524_tiny.mp4',
@@ -21,20 +22,20 @@ const VideoCarousel = () => {
         for (let i = 0; i < words.length; i += chunkSize) {
             chunks.push(words.slice(i, i + chunkSize).join(' '));
         }
-        return chunks.map(chunk => chunk + '     ');
+        const ghostWords = ' '.repeat(wordDelay);
+        chunks[0] = '  ' + chunks[0];
+        return chunks.map(chunk => chunk + ghostWords);
     }
 
     const handleTextUpdate = (event) => {
-        const chunkSize = 5;
         const fullText = 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Wesh aussi on rajoute ca';
         const video = event.target;
-        console.log(splitSentence(fullText, chunkSize))
         const chunks =  splitSentence(fullText, chunkSize);
 
 
 
         const durationPerTrunk = video.duration / chunks.length;
-        const durationPerWord = durationPerTrunk / (chunkSize+5);
+        const durationPerWord = durationPerTrunk / (chunkSize+wordDelay);
 
         const trunkToDisplay = Math.floor(video.currentTime / durationPerTrunk);
         const endIndex = Math.floor((video.currentTime % durationPerTrunk) / durationPerWord);
@@ -52,15 +53,10 @@ const VideoCarousel = () => {
                 if (index !== focusedIndex && !video.paused) {
                     video.pause();
                 }
+                videos[focusedIndex].play();
             }
         });
 
-        // Play the focused video if it exists
-        if (videos.length > focusedIndex) {
-            videos[focusedIndex].play();
-        } else {
-            console.error('Invalid focused index:', focusedIndex);
-        }
     }
 
     useEffect(() => {
@@ -91,7 +87,7 @@ const VideoCarousel = () => {
     };
 
     return (
-        <div style={{overflow: 'hidden'}}>
+        <main style={{overflow: 'hidden'}}>
             <ul
                 style={{
                     display: 'flex',
@@ -104,7 +100,7 @@ const VideoCarousel = () => {
                         key={i}
                         style={{
                             borderRadius: '10px',
-                            width: '420px',
+                            width: '450px',
                             height: '750px',
                             marginTop: '20px',
                             flexShrink: 0,
@@ -117,14 +113,14 @@ const VideoCarousel = () => {
                     >
                         {video}
                         <p
-                            style={{fontSize: '2.5rem',fontWeight:'bold', position: 'absolute', width: '350px'}}
+                            style={{fontSize: '2.5rem',fontWeight:'bold', position: 'absolute', width: '250px'}}
                         >{currentText}</p>
                     </li>
                 ))}
             </ul>
             <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
-            {/*<div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>*/}
-        </div>
+            <div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>
+        </main>
     );
 };
 

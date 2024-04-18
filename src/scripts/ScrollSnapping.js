@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
 function ScrollSnapping({handleFocusedIndexChange}) {
-    const [focusedIndex, setFocusedIndex] = useState(0); // State to store the index of the focused element
-    const [prevScrollY, setPrevScrollY] = useState(0); // State to store the previous scroll position
-    const snapInterval = 770; // Updated snap interval size
+    const [focusedIndex, setFocusedIndex] = useState(0);
+    const [prevScrollY, setPrevScrollY] = useState(0);
+    const snapInterval = 770;
 
     useEffect(() => {
         // Define snap interval size
@@ -20,12 +20,6 @@ function ScrollSnapping({handleFocusedIndexChange}) {
             } else {
                 focusedElementIndex = Math.floor(currentScrollY / snapInterval);
             }
-
-            const videos = document.querySelectorAll('video');
-
-            videos.forEach((video, index) => {
-                video.autoplay = index === focusedIndex;
-            });
 
             setPrevScrollY(currentScrollY);
             handleFocusedIndexChange(focusedElementIndex);
@@ -53,7 +47,7 @@ function ScrollSnapping({handleFocusedIndexChange}) {
         scrollToFocusedElement();
     }, [focusedIndex]);
 
-    return (<> </>);
+    return (<></>);
 }
 
 export default ScrollSnapping;

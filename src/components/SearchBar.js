@@ -3,7 +3,7 @@ import React from 'react';
 const SearchBar = ({ isExpanded, toggleSearch }) => {
     return (
         <div style={{
-            gap: isExpanded ? '20px' : '0',
+            gap: isExpanded ? '20px' : '300px',
             display: 'flex',
             width: isExpanded ? '100%' : '11%',
         }}>
@@ -27,7 +27,7 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
                 placeholder="Search..."
                 style={{
                     margin: '10px',
-                    width: isExpanded ? '500px' : '0',  // Changes width based on isExpanded
+                    width: isExpanded ? '550px' : '0',  // Changes width based on isExpanded
                     visibility: isExpanded ? 'visible' : 'hidden',  // Changes visibility
                     height: '21px',
                     padding: isExpanded ? '5px' : '0',  // Changes padding

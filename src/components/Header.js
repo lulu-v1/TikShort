@@ -47,6 +47,7 @@ const Header = ({ setDarkMode }) => {
                 alignItems: 'center',
             }}>
                 <h1 style={{
+                    cursor: 'pointer',
                     color: 'lightpink',
                     fontSize: '3rem',
                     margin: 0 // Ensuring no unexpected spacing

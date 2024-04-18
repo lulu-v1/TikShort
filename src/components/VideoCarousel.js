@@ -3,7 +3,7 @@ import ScrollSnapping from "../scripts/ScrollSnapping";
 import FeedbackButtons from "./FeedBackButtons";
 import '../style/VideoCarousel.css';
 
-const VideoCarousel = () => {
+const VideoCarousel = ({ isDarkMode }) =>{
     const [videos, setVideos] = useState([]); // State to store video elements
     const [focusedIndex, setFocusedIndex] = useState(0); // State to store the index of the focused element
     const [currentText, setCurrentText] = useState(''); // State to store the current text of the video
@@ -92,7 +92,10 @@ const VideoCarousel = () => {
         setFocusedIndex(index);
     };
 
-    return (<main style={{overflow: 'hidden'}}>
+    return (<main style={{
+        overflow: 'hidden',
+        backgroundColor: isDarkMode ? '#454546' : 'white'
+    }}>
         <ul
             className={'video-carousel'}
         >

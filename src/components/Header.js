@@ -3,7 +3,7 @@ import FilterCarousel from "./FilterCarousel";
 import SearchBar from './SearchBar';
 import DropdownMenu from './DropdownMenu'; // Make sure the import path is correct
 
-const Header = ({ isVisible }) => {
+const Header = ({ setDarkMode }) => {
     const [isSearchExpanded, setSearchExpanded] = useState(false);
     const [buttonStates, setButtonStates] = useState({
         autoplay: false,
@@ -16,6 +16,9 @@ const Header = ({ isVisible }) => {
             ...prevStates,
             [buttonName]: !prevStates[buttonName]
         }));
+        if (buttonName === 'dark') {
+            setDarkMode(prev => !prev); // Toggle dark mode
+        }
     };
 
     const buttonIcons = {

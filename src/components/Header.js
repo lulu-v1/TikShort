@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FilterCarousel from "./FilterCarousel";
 import SearchBar from './SearchBar';
-import DropdownMenu from './DropdownMenu'; // Make sure the import path is correct
+import DropdownMenu from './DropdownMenu'; // Ensure correct import path
 
 const Header = ({ setDarkMode }) => {
     const [isSearchExpanded, setSearchExpanded] = useState(false);
@@ -11,6 +11,7 @@ const Header = ({ setDarkMode }) => {
         profile: false
     });
 
+    // Toggle button state and manage dark mode toggle
     const handleButtonClick = (buttonName) => {
         setButtonStates(prevStates => ({
             ...prevStates,
@@ -47,7 +48,8 @@ const Header = ({ setDarkMode }) => {
             }}>
                 <h1 style={{
                     color: 'lightpink',
-                    fontSize: '3rem'
+                    fontSize: '3rem',
+                    margin: 0 // Ensuring no unexpected spacing
                 }}>TikShort</h1>
             </div>
             <div style={{
@@ -63,12 +65,13 @@ const Header = ({ setDarkMode }) => {
                 width: '20%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                position: 'relative', // Needed for absolute positioning of dropdown
+                position: 'relative', // For absolute positioning of dropdown
             }}>
                 {Object.entries(buttonIcons).map(([key, icon]) => (
                     <button
                         key={key}
                         aria-label={`${key} button`}
+                        aria-expanded={key === 'profile' ? buttonStates[key] : undefined}
                         onClick={() => handleButtonClick(key)}
                         style={{
                             backgroundColor: buttonStates[key] ? 'lightpink' : 'white',
@@ -82,7 +85,7 @@ const Header = ({ setDarkMode }) => {
                         <img
                             className={`${key}-icon`}
                             src={icon}
-                            alt={`${key}`}
+                            alt={`${key} icon`}
                             style={{
                                 height: '42px',
                                 verticalAlign: 'middle'
@@ -90,10 +93,7 @@ const Header = ({ setDarkMode }) => {
                         />
                     </button>
                 ))}
-                <DropdownMenu className={'animacion-click'} show={buttonStates.profile} style={{
-                    transition: 'width 1.5s ease',
-                    transformOrigin: 'right',
-                }}/>
+                <DropdownMenu show={buttonStates.profile} />
             </div>
         </header>
     );

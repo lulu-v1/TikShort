@@ -1,35 +1,30 @@
 import React, { useState } from 'react';
 
 const FilterCarousel = ({ isVisible }) => {
-    // State para manejar los botones activos como un arreglo
     const [activeButtons, setActiveButtons] = useState([]);
 
-    // Función para manejar el click en cada botón
     const handleButtonClick = (index) => {
-        // Verificar si el botón ya está activo
-        if (activeButtons.includes(index)) {
-            // Si está activo, lo removemos del arreglo
-            setActiveButtons(activeButtons.filter(item => item !== index));
-        } else {
-            // Si no está activo, lo agregamos al arreglo
-            setActiveButtons([...activeButtons, index]);
-        }
+        const updatedActiveButtons = activeButtons.includes(index)
+            ? activeButtons.filter(item => item !== index)
+            : [...activeButtons, index];
+        setActiveButtons(updatedActiveButtons);
     };
 
     return (
         <div style={{
-            alignItems: 'center',
             display: isVisible ? 'flex' : 'none',
+            alignItems: 'center',
             height: '50px',
-        }}>
+            overflow: 'hidden', // Ensure overflow doesn't trap keyboard focus
+        }} aria-label="Filter options" role="navigation">
             <ul style={{
                 display: 'flex',
-                overflowY: 'hidden',
-                overflowX: 'auto',
+                listStyleType: 'none', // Remove default list style
+                overflowX: 'auto', // Allow scrollable content
                 maxWidth: '525px',
+                padding: 0, // Remove default padding
+                margin: 0, // Align properly within container
                 alignItems: 'center',
-                scrollbarWidth: 'none',
-                '-ms-overflow-style': 'none',
             }}>
                 {Array.from({ length: 100 }).map((_, i) => (
                     <li key={i} style={{
@@ -45,7 +40,13 @@ const FilterCarousel = ({ isVisible }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                    }} onClick={() => handleButtonClick(i)}>
+                        outline: 'none' // For focus styles, avoid default outlines
+                    }}
+                        onClick={() => handleButtonClick(i)}
+                        tabIndex={0} // Make each button focusable
+                        aria-pressed={activeButtons.includes(i)} // Communicate toggle state
+                        role="button" // Explicitly set the role for each item
+                    >
                         Button
                     </li>
                 ))}

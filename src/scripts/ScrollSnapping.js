@@ -10,6 +10,7 @@ function ScrollSnapping({handleFocusedIndexChange}) {
 
         // Listen for scroll events
         const handleScroll = () => {
+            document.getElementById('share-panel').style.display = 'none';
             const currentScrollY = window.scrollY;
 
             const scrollDirection = currentScrollY > prevScrollY ? 'down' : 'up';

@@ -19,7 +19,8 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
                 aria-expanded={isExpanded}  // Indicates whether the search is expanded
                 aria-controls="searchInput"  // Points to the ID of the controlled element
             >
-                Search <i className="fas fa-search" aria-hidden="true"></i>
+                <img style={{height:'25px', padding:'8px'}} src={'https://uxwing.com/wp-content/themes/uxwing/download/user-interface/search-icon.png'} />
+                 <i className="fas fa-search" aria-hidden="true"></i>
             </button>
             <input
                 type="text"
@@ -33,7 +34,7 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
                     padding: isExpanded ? '5px' : '0',  // Changes padding
                     borderRadius: '15px',
                     border: 'none',
-                    transition: 'width 1.5s ease',  // Adds a transition
+                    transition: 'width 0.5s ease',  // Adds a transition
                     transformOrigin: 'left',
                 }}
                 aria-hidden={!isExpanded}  // Hides from screen readers when not expanded

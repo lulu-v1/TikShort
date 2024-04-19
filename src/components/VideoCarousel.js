@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ScrollSnapping from "../scripts/ScrollSnapping";
 import FeedbackButtons from "./FeedBackButtons";
 import '../style/VideoCarousel.css';
+import CommentPanel from "./CommentPanel";
 
 const VideoCarousel = ({ isDarkMode }) =>{
     const [videos, setVideos] = useState([]); // State to store video elements
@@ -24,7 +25,7 @@ const VideoCarousel = ({ isDarkMode }) =>{
     }
 
     const handleTextUpdate = (event) => {
-        const fullText = 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Wesh aussi on rajoute ca';
+        const fullText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         const video = event.target;
         const chunks = splitSentence(fullText, chunkSize);
 
@@ -50,7 +51,7 @@ const VideoCarousel = ({ isDarkMode }) =>{
                     video.currentTime = 0;
                     video.pause();
                 }
-                if (index===focusedIndex){// Set a flag to indicate that the video is in the process of playing
+                if (index === focusedIndex) {// Set a flag to indicate that the video is in the process of playing
                     video.playingFlag = true;
                     // Play the video
                     video.play().then(() => {
@@ -94,23 +95,24 @@ const VideoCarousel = ({ isDarkMode }) =>{
 
     return (<main style={{
         overflow: 'hidden',
-        backgroundColor: isDarkMode ? '#454546' : 'white'
+        backgroundColor: isDarkMode ? '#454546' : 'white',
     }}>
         <ul
             className={'video-carousel'}
         >
-            {videos.map((video, i) => (<li
-                className={'content'}
-            >
-                <div className={'video-container'}>
-                    {video}
-                    <p
-                        className={'video-text'}
-                    >{currentText}</p>
-                </div>
-
-                <FeedbackButtons/>
-            </li>))}
+            {videos.map((video, i) => (
+                <li
+                    className={'content'}
+                >
+                    <CommentPanel index={i}/>
+                    <div className={'video-container'}>
+                        {video}
+                        <p
+                            className={'video-text'}
+                        >{currentText}</p>
+                    </div>
+                    <FeedbackButtons index={i} isDarkMode={isDarkMode}/>
+                </li>))}
         </ul>
         <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
         {/*<div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>*/}

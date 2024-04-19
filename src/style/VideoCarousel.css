@@ -26,7 +26,7 @@ main {
 /* Style for the video container */
 .video-container {
     border-radius: 10px;
-    width: 450px;
+    width: 420px;
     height: 750px;
     display: flex;
     justify-content: center;
@@ -41,4 +41,5 @@ main {
     font-weight: bold;
     position: absolute;
     width: 400px;
+    text-shadow: 5px 0 20px rgba(0, 0, 0, 0.8);
 }

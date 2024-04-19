@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../style/FeedbackButtons.css'; // Import CSS file for styling
-const FeedbackButtons = ({index},{isDarkMode}) => {
+const FeedbackButtons = ({index , isDarkMode}) => {
     // State to manage the toggle state of buttons 1 and 2
     const [likeButton, setLikeButton] = useState(false);
     const [dislikeButton, setDislikeButton] = useState(false);
@@ -44,7 +44,7 @@ const FeedbackButtons = ({index},{isDarkMode}) => {
 
     return (
         <div className="feedback-container"
-        key={index}
+             key={index}
         >
             <button
                 title={'Like'}
@@ -73,7 +73,7 @@ const FeedbackButtons = ({index},{isDarkMode}) => {
                 <img className={'like-btn'} src={'https://cdn-icons-png.flaticon.com/512/2497/2497827.png'}/>
             </button>
             <p className={'counter ' + (isDarkMode ? 'dark' : 'light')}>
-            152</p>
+                152</p>
             <button
                 title={'Share'}
                 className="feedback-button"

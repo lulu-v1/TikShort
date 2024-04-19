@@ -16,7 +16,7 @@
     border-radius: 20px;
     position: absolute;
     height: 750px;
-    background-color: #dcdcdc;
+    background-color: #ececec;
     transition: transform 0.5s;
 }
 .comment-panel > h2,.comment-panel > section{
@@ -24,6 +24,8 @@
 }
 .comment{
     display: flex;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
 }
 .comment-list{
     height: 750px;

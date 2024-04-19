@@ -8,7 +8,7 @@ const SharePanel = () => {
     }
 
     return (
-        <div id={'share-panel'}>
+        <div id={'share-panel'} style={{display:'none'}}>
             {/* Ensure that CloseButton receives the onClick prop */}
             {/* Make sure CloseButton component is properly implemented */}
             <CloseButton onClick={handleSharePanelClose} />

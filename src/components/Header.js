@@ -46,7 +46,7 @@ const Header = ({ setDarkMode }) => {
                 width: '20%',
                 alignItems: 'center',
             }}>
-                <h1 style={{
+                <h1 title={'Title'} style={{
                     cursor: 'pointer',
                     color: 'lightpink',
                     fontSize: '3rem',
@@ -55,7 +55,7 @@ const Header = ({ setDarkMode }) => {
             </div>
             <div style={{
                 display: 'flex',
-                minWidth: '425px',
+                minWidth: '300px',
                 justifyContent: 'center'
             }}>
                 <SearchBar isExpanded={isSearchExpanded} toggleSearch={() => setSearchExpanded(!isSearchExpanded)}/>
@@ -74,6 +74,7 @@ const Header = ({ setDarkMode }) => {
                         aria-label={`${key} button`}
                         aria-expanded={key === 'profile' ? buttonStates[key] : undefined}
                         onClick={() => handleButtonClick(key)}
+                        title={'Button ' + key}
                         style={{
                             backgroundColor: buttonStates[key] ? 'lightpink' : 'white',
                             border: 'none',

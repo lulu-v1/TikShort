@@ -8,8 +8,10 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
             width: isExpanded ? '100%' : '11%',
         }}>
             <button
+                title={isExpanded ? 'Close searchBar' : 'Open searchBar'}
                 onClick={toggleSearch}
                 style={{
+                    border: 'none',
                     boxShadow: 'grey 0px 0px 14px 0px',
                     backgroundColor: 'white',
                     borderRadius: '15px',

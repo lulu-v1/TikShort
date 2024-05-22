@@ -6,6 +6,7 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
             gap: isExpanded ? '20px' : '300px',
             display: 'flex',
             width: isExpanded ? '100%' : '11%',
+            transition: 'step-start, width 0.5s ease', // Añade una transición para el cambio de ancho
         }}>
             <button
                 title={isExpanded ? 'Close searchBar' : 'Open searchBar'}
@@ -18,29 +19,28 @@ const SearchBar = ({ isExpanded, toggleSearch }) => {
                     color: 'black',
                     cursor: 'pointer',
                 }}
-                aria-expanded={isExpanded}  // Indicates whether the search is expanded
-                aria-controls="searchInput"  // Points to the ID of the controlled element
+                aria-expanded={isExpanded}  // Indica si la búsqueda está expandida
+                aria-controls="searchInput"  // Señala al ID del elemento controlado
             >
-                <img style={{height:'25px', padding:'8px'}} src={'https://uxwing.com/wp-content/themes/uxwing/download/user-interface/search-icon.png'} />
-                 <i className="fas fa-search" aria-hidden="true"></i>
+                <img style={{ height: '25px', padding: '8px' }} src={'https://uxwing.com/wp-content/themes/uxwing/download/user-interface/search-icon.png'} />
+                <i className="fas fa-search" aria-hidden="true"></i>
             </button>
             <input
                 type="text"
-                id="searchInput"  // ID referenced by aria-controls in the button
+                id="searchInput"  // ID referenciado por aria-controls en el botón
                 placeholder="Search..."
                 style={{
                     margin: '10px',
-                    width: isExpanded ? '550px' : '0',  // Changes width based on isExpanded
-                    visibility: isExpanded ? 'visible' : 'hidden',  // Changes visibility
+                    width: isExpanded ? '550px' : '0',  // Cambia el ancho basado en isExpanded
+                    visibility: isExpanded ? 'visible' : 'hidden',  // Cambia la visibilidad
                     height: '21px',
-                    padding: isExpanded ? '5px' : '0',  // Changes padding
+                    padding: isExpanded ? '5px' : '0',  // Cambia el padding
                     borderRadius: '15px',
                     border: 'none',
-                    transition: 'width 0.5s ease',  // Adds a transition
-                    transformOrigin: 'left',
+                    transition: 'width 0.5s ease, visibility 0.5s ease, padding 0.5s ease',  // Añade transiciones adicionales
                 }}
-                aria-hidden={!isExpanded}  // Hides from screen readers when not expanded
-                tabIndex={isExpanded ? 0 : -1}  // Makes input focusable only when expanded
+                aria-hidden={!isExpanded}  // Oculta de lectores de pantalla cuando no está expandido
+                tabIndex={isExpanded ? 0 : -1}  // Hace que el input sea enfocable solo cuando está expandido
             />
         </div>
     );

@@ -31,15 +31,16 @@ const Header = ({ setDarkMode }) => {
     return (
         <header style={{
             position: 'sticky',
-            top: 0,
             display: 'flex',
             justifyContent: 'space-between',
+            gap: '250px',
             alignItems: 'center',
             backgroundColor: 'black',
             zIndex: 10,
             color: 'white',
             height: '100px',
             padding: '0 15px',
+            boxShadow: 'grey 0px 2px 14px 0px',
         }}>
             <div className={'App-title'} style={{
                 display: 'flex',

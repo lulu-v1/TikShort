@@ -8,7 +8,6 @@ const App = () => {
 
     return (
         <div>
-            <SharePanel/>
             <Header setDarkMode={setDarkMode} />
             <VideoCarousel isDarkMode={isDarkMode} />
         </div>

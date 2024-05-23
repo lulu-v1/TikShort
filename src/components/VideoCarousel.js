@@ -4,7 +4,7 @@ import FeedbackButtons from "./FeedBackButtons";
 import '../style/VideoCarousel.css';
 import CommentPanel from "./CommentPanel";
 
-const VideoCarousel = ({isDarkMode, isAutoPlay}) => {
+const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
     const [videos, setVideos] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const [currentText, setCurrentText] = useState('');
@@ -203,7 +203,7 @@ const VideoCarousel = ({isDarkMode, isAutoPlay}) => {
                     </li>
                 ))}
             </ul>
-            {/*<div style={{position:'fixed',top:'150px'}}>{focusedIndex}</div>*/}
+            <div style={{position:'fixed',top:'150px'}}>User : {JSON.stringify(user)}</div>
             {/*<div style={{position:'fixed',top:'180px'}}>{isAutoPlay.toString()}</div>*/}
             <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
         </main>

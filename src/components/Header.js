@@ -33,6 +33,7 @@ const Header = ({setDarkMode, setAutoPlay}) => {
 
     return (
         <header style={{
+            top: 0,
             position: 'sticky',
             display: 'flex',
             justifyContent: 'space-between',

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FilterCarousel from "./FilterCarousel";
 import SearchBar from './SearchBar';
 import DropdownMenu from './DropdownMenu'; // Ensure correct import path
 
-const Header = ({ setDarkMode }) => {
+const Header = ({setDarkMode, setAutoPlay}) => {
     const [isSearchExpanded, setSearchExpanded] = useState(false);
     const [buttonStates, setButtonStates] = useState({
         autoplay: false,
@@ -20,10 +20,13 @@ const Header = ({ setDarkMode }) => {
         if (buttonName === 'dark') {
             setDarkMode(prev => !prev); // Toggle dark mode
         }
+        if (buttonName === 'autoplay') {
+            setAutoPlay(prev => !prev); // Toggle autoplay
+        }
     };
 
     const buttonIcons = {
-        autoplay: 'https://www.djoser.nl/images/uploads/cms_visual_39735.png',
+        autoplay: 'https://imgs.search.brave.com/IaPB3_IsvTafCj387jUXMHgBUzir8ok_fjAxnu97Ivg/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni8xNTMzNi8xNTMz/NjE5Ny5wbmc_c2Vt/dD1haXNfaHlicmlk',
         dark: 'https://www.svgrepo.com/show/445061/dark-mode-solid.svg',
         profile: 'https://www.citypng.com/public/uploads/small/116395943260tji5ordfujy44njydzhlidv8reqpmtun7ggx1oszpz1dcistzxnmag7do6vxkjxphlsgueuurkg9pkpbwgorvv9lratpxm38rp5.png'
     };
@@ -96,7 +99,7 @@ const Header = ({ setDarkMode }) => {
                         />
                     </button>
                 ))}
-                <DropdownMenu show={buttonStates.profile} />
+                <DropdownMenu show={buttonStates.profile}/>
             </div>
         </header>
     );

@@ -4,14 +4,16 @@ import FeedbackButtons from "./FeedBackButtons";
 import '../style/VideoCarousel.css';
 import CommentPanel from "./CommentPanel";
 
-const VideoCarousel = ({isDarkMode}) => {
+const VideoCarousel = ({isDarkMode, isAutoPlay}) => {
     const [videos, setVideos] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const [currentText, setCurrentText] = useState('');
     const startTimeRef = useRef(null);
     const animationFrameIdRef = useRef(null);
 
-    const chunkSize = 5;
+    const voiceAudioRef = useRef(null);
+
+    const chunkSize = 6;
     const wordDelay = 4;
 
     const videoURLs = [
@@ -24,29 +26,22 @@ const VideoCarousel = ({isDarkMode}) => {
     ];
 
     const speech = [
-        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-27-54.mp3',
-        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-27-17.mp3',
-        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-26-10.mp3',
-        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-25-49.mp3',
+        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-22-50.mp3',
         '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-25-4.mp3',
-        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-22-50.mp3'
-    ]
+        '/static/voices/ttsMP3.com_VoiceText_2024-5-23_19-26-21.mp3',
+        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-26-10.mp3',
+        '/static/voices/ttsMP3.com_VoiceText_2024-5-23_19-26-30.mp3',
+        '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-27-54.mp3'
+    ];
+
+
     const facts = [
         'Le cerveau humain consomme de l\'électricité : Le cerveau humain utilise environ 20 watts d\'électricité, assez pour alimenter une ampoule faible. Il constitue environ 2% du poids corporel total mais consomme 20% de l\'énergie de notre corps.',
         'Les poulpes ont trois cœurs : Deux pompent le sang aux branchies, tandis que le troisième le pompe vers le reste du corps. Leur sang est riche en cuivre, ce qui leur donne une couleur bleue.',
-        'La vitesse de la lumière dans le vide est de 299 792 458 mètres par seconde : Cette constante universelle est utilisée dans de nombreux domaines scientifiques, y compris la physique et l\'astronomie.',
+        'Le cri ultrasonique des chauves-souris : Les chauves-souris émettent des ultrasons à des fréquences si élevées que certains peuvent atteindre 200 000 Hz, ce qui leur permet de naviguer et de chasser dans l\'obscurité totale.',
         'L’ADN humain est à 98% identique à celui des chimpanzés : Cette proximité génétique démontre l\'évolution et l\'ascendance commune entre les espèces humaines et les primates.',
-        'La tomate est un fruit : Botaniquement parlant, les tomates sont des fruits car elles se développent à partir de l\'ovaire d\'une fleur et contiennent des graines.',
+        'Les étoiles naines brunes : Les étoiles naines brunes sont des objets stellaires intermédiaires entre les planètes géantes gazeuses et les étoiles, car elles n\'ont pas assez de masse pour déclencher des réactions de fusion nucléaire.',
         'Les bananes sont légèrement radioactives : Elles contiennent du potassium-40, un isotope radioactif naturel, mais elles ne sont pas dangereuses pour la santé.',
-        // 'Le miel ne se périme jamais : Des pots de miel vieux de 3000 ans ont été trouvés dans des tombes égyptiennes, toujours comestibles grâce à ses propriétés antibactériennes naturelles.',
-        // 'La gravité n\'est pas uniforme partout sur Terre : En raison de la rotation de la Terre et de sa forme géoïde, la force de gravité varie légèrement selon les endroits.',
-        // 'Le son se déplace plus rapidement dans l\'eau que dans l\'air : Il se propage environ quatre fois plus vite dans l\'eau, à cause de la densité et de l\'élasticité de l\'eau.',
-        // 'Le mont Everest grandit chaque année : En raison des plaques tectoniques, le mont Everest gagne environ 4 millimètres de hauteur chaque année.',
-        // 'Les cellules du corps humain se régénèrent constamment : Par exemple, les cellules de la peau se régénèrent environ toutes les 27 jours, tandis que les cellules de l\'estomac se renouvellent tous les 5 jours.',
-        // 'L’Univers est composé à 68% d’énergie noire : Cette forme mystérieuse d\'énergie est responsable de l\'expansion accélérée de l\'Univers.',
-        // 'La plus grande structure vivante sur Terre est la Grande Barrière de corail : S\'étendant sur plus de 2 300 kilomètres, elle est visible depuis l\'espace et abrite une biodiversité immense.',
-        // 'Les oiseaux sont des descendants des dinosaures : Les preuves fossiles montrent que les oiseaux modernes ont évolué à partir de petits dinosaures théropodes.',
-        // 'Le téflon a été découvert accidentellement : En 1938, le chimiste Roy Plunkett a découvert le téflon alors qu\'il travaillait sur des réfrigérants, réalisant qu\'il avait créé un polymère aux propriétés antiadhésives.'
     ];
 
     const durations = [];
@@ -56,7 +51,6 @@ const VideoCarousel = ({isDarkMode}) => {
             return new Promise((resolve) => {
                 const audio = new Audio(src);
                 audio.addEventListener('loadedmetadata', () => {
-                    console.log('Duration:', audio.duration);
                     durations[index] = audio.duration;
                     resolve();
                 });
@@ -89,21 +83,27 @@ const VideoCarousel = ({isDarkMode}) => {
 
         let elapsed = (Date.now() - startTimeRef.current) / 1000; // Elapsed time in seconds
 
-        // Reset startTimeRef when the full text has been displayed
-        if (elapsed > (factDuration - 0.5)) {
+        // Reset startTimeRef and scroll if AutoPlay is active when the full text has been displayed
+        if (elapsed > (factDuration - 0.1)) {
             startTimeRef.current = Date.now();
             elapsed = 0;
+            if (isAutoPlay && focusedIndex < videoURLs.length - 1) {
+                setFocusedIndex(prevState => (prevState + 1));
+                const targetScroll = (focusedIndex+1) * 770;
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth' // Optional: Add smooth scrolling behavior
+                });
+            }
         }
 
         const chunkToDisplay = Math.floor(elapsed / durationPerChunk);
         const endIndex = Math.floor((elapsed % durationPerChunk) / durationPerWord);
-        if (chunks[chunkToDisplay]){
-
+        if (chunks[chunkToDisplay]) {
             const wordsToDisplay = chunks[chunkToDisplay].split(' ').slice(0, endIndex + 1) || [];
             setCurrentText(wordsToDisplay.join(' '));
         }
     };
-
 
     const startAnimation = () => {
         startTimeRef.current = Date.now();
@@ -121,10 +121,9 @@ const VideoCarousel = ({isDarkMode}) => {
         }
     };
 
-    const playFocusedVideo = () => {
+    const playFocusedMedia = () => {
         stopAnimation();
         startAnimation();
-
         const videos = document.querySelectorAll('video');
         videos.forEach((video, index) => {
             if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
@@ -144,6 +143,18 @@ const VideoCarousel = ({isDarkMode}) => {
                 }
             }
         });
+
+        if (voiceAudioRef.current) {
+            voiceAudioRef.current.pause();
+            voiceAudioRef.current.loop = true;
+            voiceAudioRef.current.currentTime = 0;
+            setTimeout(() => {
+                voiceAudioRef.current.src = speech[focusedIndex];
+                voiceAudioRef.current.play().catch((error) => {
+                    console.error('Error occurred while playing voice:', error);
+                });
+            }, 800); // Delay of 0.5 seconds
+        }
     };
 
     useEffect(() => {
@@ -156,14 +167,27 @@ const VideoCarousel = ({isDarkMode}) => {
             />
         ));
         setVideos(videoElements);
-     playFocusedVideo()
-    },[focusedIndex]);
+        playFocusedMedia();
+    }, [focusedIndex]);
+
     useEffect(() => {
-        loadDurations().then(r => { });
+        loadDurations().then(() => {});
     });
+    useEffect(() => {
+
+        playFocusedMedia();
+    }, []);
     const handleFocusedIndexChange = (index) => {
         setFocusedIndex(index);
     };
+
+    useEffect(() => {
+        voiceAudioRef.current = new Audio();
+
+        return () => {
+            if (voiceAudioRef.current) voiceAudioRef.current.pause();
+        };
+    }, []);
 
     return (
         <main style={{overflow: 'hidden', backgroundColor: isDarkMode ? '#454546' : 'white'}}>
@@ -179,8 +203,9 @@ const VideoCarousel = ({isDarkMode}) => {
                     </li>
                 ))}
             </ul>
+            {/*<div style={{position:'fixed',top:'150px'}}>{focusedIndex}</div>*/}
+            {/*<div style={{position:'fixed',top:'180px'}}>{isAutoPlay.toString()}</div>*/}
             <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
-            <div style={{position: 'fixed', top: '150px'}}>index : {focusedIndex}</div>
         </main>
     );
 };

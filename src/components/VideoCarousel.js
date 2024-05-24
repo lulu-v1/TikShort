@@ -4,7 +4,7 @@ import FeedbackButtons from "./FeedBackButtons";
 import '../style/VideoCarousel.css';
 import CommentPanel from "./CommentPanel";
 
-const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
+const VideoCarousel = ({isDarkMode, isAutoPlay, videoUrls, user}) => {
     const [videos, setVideos] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const [currentText, setCurrentText] = useState('');
@@ -15,15 +15,6 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
 
     const chunkSize = 6;
     const wordDelay = 4;
-
-    const videoURLs = [
-        '/static/vids/28707-371213524_tiny.mp4',
-        '/static/vids/198358-907598215_tiny.mp4',
-        '/static/vids/11856385-uhd_2160_3840_25fps.mp4',
-        '/static/vids/18724815-hd_1080_1920_40fps.mp4',
-        '/static/vids/20770858-hd_1080_1920_30fps.mp4',
-        '/static/vids/6060027-uhd_2160_3840_25fps.mp4'
-    ];
 
     const speech = [
         '/static/voices/ttsMP3.com_VoiceText_2024-5-22_19-22-50.mp3',
@@ -87,9 +78,9 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
         if (elapsed > (factDuration - 0.1)) {
             startTimeRef.current = Date.now();
             elapsed = 0;
-            if (isAutoPlay && focusedIndex < videoURLs.length - 1) {
+            if (isAutoPlay && focusedIndex < videoUrls.length - 1) {
                 setFocusedIndex(prevState => (prevState + 1));
-                const targetScroll = (focusedIndex+1) * 770;
+                const targetScroll = (focusedIndex + 1) * 770;
                 window.scrollTo({
                     top: targetScroll,
                     behavior: 'smooth' // Optional: Add smooth scrolling behavior
@@ -158,7 +149,15 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
     };
 
     useEffect(() => {
-        const videoElements = videoURLs.map((url, i) => (
+        playFocusedMedia();
+    }, [focusedIndex]);
+
+    useEffect(() => {
+        loadDurations().then(() => {
+        });
+    });
+    useEffect(() => {
+        const videoElements = videoUrls.map((url, i) => (
             <video
                 key={i}
                 src={url}
@@ -168,18 +167,28 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
         ));
         setVideos(videoElements);
         playFocusedMedia();
-    }, [focusedIndex]);
-
-    useEffect(() => {
-        loadDurations().then(() => {});
-    });
-    useEffect(() => {
-
-        playFocusedMedia();
-    }, []);
+    }, [videoUrls]);
     const handleFocusedIndexChange = (index) => {
         setFocusedIndex(index);
+        // Update the URL with the index
+        const newUrl = `${window.location.pathname}?focusedIndex=${index}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
     };
+
+    useEffect(() => {
+        // Listen for changes in the URL
+        const handlePopstate = () => {
+            const params = new URLSearchParams(window.location.search);
+            const newIndex = parseInt(params.get('focusedIndex')) || 0;
+            setFocusedIndex(newIndex);
+        };
+        window.addEventListener('popstate', handlePopstate);
+
+        // Clean up the event listener
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
 
     useEffect(() => {
         voiceAudioRef.current = new Audio();
@@ -194,7 +203,7 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
             <ul className="video-carousel">
                 {videos.map((video, i) => (
                     <li key={i} className="content">
-                        <CommentPanel index={i}/>
+                        <CommentPanel index={i} user={user}/>
                         <div className="video-container">
                             {video}
                             <p className="video-text">{currentText}</p>
@@ -203,7 +212,7 @@ const VideoCarousel = ({isDarkMode, isAutoPlay, user}) => {
                     </li>
                 ))}
             </ul>
-            <div style={{position:'fixed',top:'150px'}}>User : {JSON.stringify(user)}</div>
+            {/*<div style={{position: 'fixed', top: '150px'}}>Url : {JSON.stringify(videoUrls)}</div>*/}
             {/*<div style={{position:'fixed',top:'180px'}}>{isAutoPlay.toString()}</div>*/}
             <ScrollSnapping handleFocusedIndexChange={handleFocusedIndexChange}/>
         </main>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const DropdownMenu = ({ show, onClose }) => {
+const DropdownMenu = ({ show, onClose, user }) => {
     const firstButtonRef = useRef(null);
 
     // Manage focus on open and close
@@ -31,7 +31,7 @@ const DropdownMenu = ({ show, onClose }) => {
             transition: 'width 1.5s ease',
             transformOrigin: 'right',
             outline: 'none'
-        }} aria-labelledby="profileButton"> Profile
+        }} aria-labelledby="profileButton"> Profile <br/> {user.username}
             <div className="button-login" style={{
                 backgroundColor: 'white',
                 boxShadow: '0px 8px 12px 5px rgba(0,0,0,0.2)',

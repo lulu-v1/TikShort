@@ -24,6 +24,7 @@
 }
 .comment{
     display: flex;
+    flex-direction: column;
     border-bottom: 1px solid black;
     margin-bottom: 10px;
 }

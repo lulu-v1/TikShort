@@ -3,7 +3,7 @@ import FilterCarousel from "./FilterCarousel";
 import SearchBar from './SearchBar';
 import DropdownMenu from './DropdownMenu'; // Ensure correct import path
 
-const Header = ({setDarkMode, setAutoPlay}) => {
+const Header = ({setDarkMode, setAutoPlay, user}) => {
     const [isSearchExpanded, setSearchExpanded] = useState(false);
     const [buttonStates, setButtonStates] = useState({
         autoplay: false,
@@ -100,7 +100,7 @@ const Header = ({setDarkMode, setAutoPlay}) => {
                         />
                     </button>
                 ))}
-                <DropdownMenu show={buttonStates.profile}/>
+                <DropdownMenu show={buttonStates.profile} user={user} />
             </div>
         </header>
     );

@@ -7,10 +7,7 @@ const MusicPlayer = () => {
     const [volume, setVolume] = useState(0.5);
 
     const musics = [
-        '/static/musics/Lofi Hip Hop Chillhop Music Mix  GEMN Chill Lo fi Hip Hop Beats FREE 2022.mp3',
-        '/static/musics/Djo - End of Beginning (Official Lyric Video).mp3',
-        '/static/musics/Gym Class Heroes - Cupid s Chokehold (Lyrics) ft.Patrick Stump u201cTake a look at my girlfriend sheu2019s .mp3',
-        '/static/musics/Larry June, Cardo & Alemán -  Big Fish (Official Video) (320).mp3',
+        '/static/musics/Artemas_-_i_like_the_way_you_kiss_me_lyric_video_320.mp3',
         '/static/musics/Lay Bankz - Tell Ur Girlfriend (Lyrics) (320).mp3',
         '/static/musics/Sabrina Carpenter - Espresso (Official Audio) (320).mp3'
     ];

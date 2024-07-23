@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/TikShort/static/css/main.bcf6c473.css",
-    "main.js": "/TikShort/static/js/main.9cd53499.js",
+    "main.js": "/TikShort/static/js/main.1f3d1d3d.js",
     "static/js/453.a93cea51.chunk.js": "/TikShort/static/js/453.a93cea51.chunk.js",
     "index.html": "/TikShort/index.html",
     "main.bcf6c473.css.map": "/TikShort/static/css/main.bcf6c473.css.map",
-    "main.9cd53499.js.map": "/TikShort/static/js/main.9cd53499.js.map",
+    "main.1f3d1d3d.js.map": "/TikShort/static/js/main.1f3d1d3d.js.map",
     "453.a93cea51.chunk.js.map": "/TikShort/static/js/453.a93cea51.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bcf6c473.css",
-    "static/js/main.9cd53499.js"
+    "static/js/main.1f3d1d3d.js"
   ]
 }
